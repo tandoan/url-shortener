@@ -28,4 +28,19 @@ class BaseConverter {
 			$Output = strrev($Output);
 			return $Output;
 		}
+
+		public function ConvertBack($Key) {
+			$Output = 0;
+			$Base = strlen($this->CharacterSet);
+			$InputLength = strlen($Key);
+			for($Exponent = 0;$Exponent < $InputLength, $Exponent++) {
+				$SearchChar = $Key[$Exponent];
+				$Multiple = array_search($SearchChar, $this->CharacterSet);
+				if(false !== $Multiple) {
+					$Output +=  $Multiple * pow($Base, $Exponent);
+				} else {
+					//TODO: Throw some exception
+				}
+			}
+		}
 }

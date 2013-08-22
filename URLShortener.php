@@ -34,7 +34,7 @@ class URLShortener{
 	}
 
 	public function Unshorten($Key) {
-		$ID = $this->BaseConverter->ConvertBAck($Key);
+		$ID = $this->BaseConverter->ConvertBack($Key);
 		$URL = $this->DAO->GetURL($ID);
 
 		//TODO: Add a hook to track things, such as stats in the future
