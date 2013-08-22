@@ -29,19 +29,28 @@ class BaseConverter {
 			return $Output;
 		}
 
+		// convert back to a base 10 integer
 		public function ConvertBack($Key) {
-			$Output = 0;
+			//initialize some variables
+			$WorkingKey = (string)$Key;
+			$WorkingKey = strrev($WorkingKey);
+			$Output = '';
 			$Base = strlen($this->CharacterSet);
-			$InputLength = strlen($Key);
-			for($Exponent = 0;$Exponent < $InputLength; $Exponent++) {
-				$SearchChar = $Key[$Exponent];
-				$Multiple = array_search($SearchChar, $this->CharacterSet);
+			$InputLength = strlen($WorkingKey);
+			$Exponent = ($InputLength-1);
+
+			// base conversion, loop through the digits and sum the proper multiples
+			do {
+				$SearchChar = $WorkingKey[$Exponent];
+				$Multiple = strpos($this->CharacterSet, $SearchChar);
 				if(false !== $Multiple) {
 					$Output +=  $Multiple * pow($Base, $Exponent);
 				} else {
 					//TODO: Throw some exception
 				}
-			}
+
+				$Exponent--;
+			} while ($Exponent > -1);
 			return $Output;
 		}
 }
