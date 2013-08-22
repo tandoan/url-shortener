@@ -10,9 +10,23 @@ use Behat\Gherkin\Node\PyStringNode,
 //
 // Require 3rd-party libraries here:
 //
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+   require_once 'PHPUnit/Autoload.php';
+   require_once 'PHPUnit/Framework/Assert/Functions.php';
+
+$Delimiter = ':';
+$CWD = getcwd();
+$CurrentIncludePath = ini_get('include_path');
+$Includes = array();
+$Includes[] = '.';
+$Includes[] = '/usr/share/pear';
+$Includes[] = $CWD;
+$Includes[] = $CWD."/../../";
+$Includes[] = $CurrentIncludePath;
+
+$NewIncludePath = implode($Delimiter, $Includes);
+ini_set('include_path',$NewIncludePath);
+
+require_once('BaseConverter.php');
 
 /**
  * Features context.
@@ -27,26 +41,29 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-		require_once('../../baseconverter.php');
         // Initialize your context here
-		$this->Converter = new baseconverter();
+		$this->Converter = new BaseConverter();
     }
 
 
 	/**
-	 * @When /^I <input> a positive number$/
+	 * @When /^I convert "([^"]*)" I expect "([^"]*)"$/
 	 */
-	public function iInputAPositiveNumber()
+	public function iConvertIExpect($arg1,$arg2)
 	{
-		//	throw new PendingException();
+			echo $arg1." ".$arg2."\n";
+		assertEquals($arg2, $this->Converter->Convert($arg1));
 	}
 
 	/**
-	 * @Then /^I should <get> this output$/
+	 * @When /^I convert back "([^"]*)" I expect "([^"]*)"$/
 	 */
-	public function iShouldGetThisOutput($input)
+	public function iConvertBackIExpect($arg1,$arg2)
 	{
-			return $get = $this->Converter->convert($input);
+		assertEquals($arg2, $this->Converter->ConvertBack($arg1));
 	}
+
+
+   
 
 }

@@ -3,11 +3,10 @@ Feature: Base converter
 
 Scenario Outline: Convert
 	Given: initial characters are "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	When I <input> a positive number
-	Then I should <get> this output
+	When I convert "<input>" I expect "<output>"
 
 	Examples:
-	  | <input> | <get> |
+	  | <input> | <output> |
 	  | 0 | 0 |
 	  | 1 | 1 |
 	  | 2 | 2 |
@@ -74,11 +73,9 @@ Scenario Outline: Convert
 
 Scenario Outline: ConvertBack
 	Given: initial characters are "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	When I <input> the key
-	Then I should <get> this output
+	When I convert back "<key>" I expect "<id>"
 
 	Examples:
-	  | <input> | <get> |
 	  | 0 | 0 |
 	  | 1 | 1 |
 	  | 2 | 2 |
