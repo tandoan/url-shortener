@@ -1,18 +1,4 @@
 <?php
-abstract class DAO {
-	public function GetNextID();
-	public function Save($NextID, $ShortURL, $Url);
-	public function GetURL($ID);
-}
-
-class URLShortenerFactory{
-
-	public function Create($DAO, $UnShortenPlugins = array(), $CharacterSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
-		$BaseConverter = new BaseConverter($CharacterSet);
-		return new URLShortener($BaseConverter, $DAO, $UnShortenPlugins);
-	}
-}
-
 class URLShortener{
 
 	private $BaseConverter;
